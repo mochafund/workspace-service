@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class WorkspaceEventConsumer {
 
-    @KafkaListener(topics = "workspace.created", groupId = "workspace-service")
-    public void handleWorkspaceCreated(WorkspaceEvent event) {
+    @KafkaListener(topics = "workspace.provisioning", groupId = "workspace-service")
+    public void handleWorkspaceProvisioning(WorkspaceEvent event) {
         CorrelationIdUtil.executeWithCorrelationId(event, () -> {
-            log.info("Processing workspace.created- Workspace: {}", event.getData().name());
+            log.info("Processing workspace.provisioning- Workspace: {}", event.getData().name());
         });
     }
 
