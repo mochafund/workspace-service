@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class WorkspaceEventConsumer {
     private final IWorkspaceService workspaceService;
     private final KafkaProducer kafkaProducer;
 
+    @Transactional
     @KafkaListener(topics = "workspace.provisioning", groupId = "workspace-service")
     public void handleWorkspaceProvisioning(WorkspaceEvent event) {
         CorrelationIdUtil.executeWithCorrelationId(event, () -> {
