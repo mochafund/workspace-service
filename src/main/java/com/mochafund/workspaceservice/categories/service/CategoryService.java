@@ -38,7 +38,7 @@ public class CategoryService implements ICategoryService {
     @Transactional(readOnly = true)
     public List<CategoryDto> listAllDtosByWorkspaceId(UUID workspaceId) {
         return categoryRepository.findAllByWorkspaceId(workspaceId).stream()
-                .sorted(Comparator.comparing(Category::getCreatedAt))
+                .sorted(Comparator.comparing(Category::getName))
                 .map(CategoryDto::fromEntity)
                 .toList();
     }
@@ -61,7 +61,7 @@ public class CategoryService implements ICategoryService {
 
     private List<CategoryTreeDto> buildTree(UUID parentId, Map<UUID, List<Category>> byParent) {
         return byParent.getOrDefault(parentId, List.of()).stream()
-                .sorted(Comparator.comparing(Category::getCreatedAt))
+                .sorted(Comparator.comparing(Category::getName))
                 .map(category -> {
                     List<CategoryTreeDto> children = buildTree(category.getId(), byParent);
                     return CategoryTreeDto.fromEntity(category, children);
