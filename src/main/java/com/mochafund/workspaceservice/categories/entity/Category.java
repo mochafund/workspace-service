@@ -10,8 +10,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -61,8 +65,21 @@ public class Category extends BaseEntity implements Patchable {
     @Column(name = "exclude_from_totals", nullable = false)
     private boolean excludeFromTotals = false;
 
+    @PatchableField
+    @Column(name = "parent_id")
+    private UUID parentId;
+
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workspace_id", insertable = false, updatable = false)
     private Workspace workspace;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id", insertable = false, updatable = false)
+    private Category parent;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "parent")
+    private Set<Category> children = new HashSet<>();
 }

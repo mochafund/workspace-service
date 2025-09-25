@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-public class CategoryDto  extends BaseDto {
+public class CategoryTreeDto extends BaseDto {
 
     private UUID workspaceId;
     private UUID createdBy;
@@ -30,9 +30,18 @@ public class CategoryDto  extends BaseDto {
     private boolean isIncome;
     private boolean excludeFromBudget;
     private boolean excludeFromTotals;
+    private boolean isGroup;
+    private List<CategoryTreeDto> children;
 
-    public static CategoryDto fromEntity(Category category) {
-        return CategoryDto.builder()
+    public static CategoryTreeDto fromEntity(Category category) {
+        return fromEntity(category, List.of());
+    }
+
+    public static CategoryTreeDto fromEntity(Category category, List<CategoryTreeDto> children) {
+        List<CategoryTreeDto> safeChildren = children == null ? List.of() : List.copyOf(children);
+        boolean isGroup = !safeChildren.isEmpty();
+
+        return CategoryTreeDto.builder()
                 .id(category.getId())
                 .createdAt(category.getCreatedAt())
                 .updatedAt(category.getUpdatedAt())
@@ -45,10 +54,8 @@ public class CategoryDto  extends BaseDto {
                 .isIncome(category.isIncome())
                 .excludeFromBudget(category.isExcludeFromBudget())
                 .excludeFromTotals(category.isExcludeFromTotals())
+                .isGroup(isGroup)
+                .children(safeChildren)
                 .build();
-    }
-
-    public static List<CategoryDto> fromEntities(List<Category> categories) {
-        return categories.stream().map(CategoryDto::fromEntity).toList();
     }
 }

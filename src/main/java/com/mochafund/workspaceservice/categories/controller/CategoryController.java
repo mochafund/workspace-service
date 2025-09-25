@@ -1,6 +1,7 @@
 package com.mochafund.workspaceservice.categories.controller;
 
 import com.mochafund.workspaceservice.categories.dto.CategoryDto;
+import com.mochafund.workspaceservice.categories.dto.CategoryTreeDto;
 import com.mochafund.workspaceservice.categories.dto.CreateCategoryDto;
 import com.mochafund.workspaceservice.categories.dto.UpdateCategoryDto;
 import com.mochafund.workspaceservice.categories.entity.Category;
@@ -36,39 +37,57 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CategoryDto>> getAllCategories(@WorkspaceId UUID workspaceId) {
-        List<Category> categories = categoryService.listAllByWorkspaceId(workspaceId);
-        return ResponseEntity.ok().body(CategoryDto.fromEntities(categories));
+        List<CategoryDto> categories = categoryService.listAllDtosByWorkspaceId(workspaceId);
+        return ResponseEntity.ok(categories);
+    }
+
+    @PreAuthorize("hasAuthority('READ')")
+    @GetMapping(value = "/tree", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CategoryTreeDto>> getCategoryTree(@WorkspaceId UUID workspaceId) {
+        List<CategoryTreeDto> categories = categoryService.listCategoryTreeByWorkspaceId(workspaceId);
+        return ResponseEntity.ok(categories);
     }
 
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping(value = "/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CategoryDto> getCategory(@WorkspaceId UUID workspaceId, @PathVariable UUID categoryId) {
-        Category category = categoryService.getCategory(workspaceId, categoryId);
-        return ResponseEntity.ok().body(CategoryDto.fromEntity(category));
+    public ResponseEntity<CategoryDto> getCategory(
+            @WorkspaceId UUID workspaceId,
+            @PathVariable UUID categoryId
+    ) {
+        CategoryDto category = categoryService.getCategoryDto(workspaceId, categoryId);
+        return ResponseEntity.ok(category);
     }
 
     @PreAuthorize("hasAuthority('WRITE')")
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryDto> createCategory(
-            @UserId UUID userId, @WorkspaceId UUID workspaceId,
+            @UserId UUID userId,
+            @WorkspaceId UUID workspaceId,
             @Valid @RequestBody CreateCategoryDto categoryDto
     ) {
         Category category = categoryService.createCategory(userId, workspaceId, categoryDto);
-        return ResponseEntity.status(201).body(CategoryDto.fromEntity(category));
+        CategoryDto payload = categoryService.getCategoryDto(workspaceId, category.getId());
+        return ResponseEntity.status(201).body(payload);
     }
 
     @PreAuthorize("hasAuthority('WRITE')")
     @PatchMapping(value = "/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryDto> updateCategory(
-            @WorkspaceId UUID workspaceId, @PathVariable UUID categoryId,
-            @Valid @RequestBody UpdateCategoryDto categoryDto) {
-        Category category = categoryService.updateCategory(workspaceId, categoryId, categoryDto);
-        return ResponseEntity.ok().body(CategoryDto.fromEntity(category));
+            @WorkspaceId UUID workspaceId,
+            @PathVariable UUID categoryId,
+            @Valid @RequestBody UpdateCategoryDto categoryDto
+    ) {
+        categoryService.updateCategory(workspaceId, categoryId, categoryDto);
+        CategoryDto payload = categoryService.getCategoryDto(workspaceId, categoryId);
+        return ResponseEntity.ok(payload);
     }
 
     @PreAuthorize("hasAuthority('WRITE')")
     @DeleteMapping(value = "/{categoryId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteCategory(@WorkspaceId UUID workspaceId, @PathVariable UUID categoryId) {
+    public ResponseEntity<Void> deleteCategory(
+            @WorkspaceId UUID workspaceId,
+            @PathVariable UUID categoryId
+    ) {
         categoryService.deleteCategory(workspaceId, categoryId);
         return ResponseEntity.noContent().build();
     }

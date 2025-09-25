@@ -7,18 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCategoryDto {
 
-    @NotBlank(message = "Tag name must be provided")
-    @Size(min = 1, max = 100, message = "Tag name must be between 1 and 100 characters")
+    @NotBlank(message = "Category name must be provided")
+    @Size(min = 1, max = 100, message = "Category name must be between 1 and 100 characters")
     private String name;
 
     private String description;
-    private boolean isIncome;
-    private boolean excludeFromBudget;
-    private boolean excludeFromTotals;
+    private Boolean income;
+    private Boolean excludeFromBudget;
+    private Boolean excludeFromTotals;
+    private UUID parentId;
 }
