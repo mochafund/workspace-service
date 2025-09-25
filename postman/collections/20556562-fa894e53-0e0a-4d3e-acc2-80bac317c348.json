@@ -6,62 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "workspaces",
-			"item": [
-				{
-					"name": "current",
-					"item": [
-						{
-							"name": "/workspaces/current",
-							"id": "20556562-ef8a1c20-cec2-47e3-b4e9-0ecb06668dcf",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{workspace-service}}/workspaces/current",
-									"host": [
-										"{{workspace-service}}"
-									],
-									"path": [
-										"workspaces",
-										"current"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/workspaces/current",
-							"id": "20556562-08eb0864-9935-4b99-b664-0213c03caf55",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "PATCH",
-								"header": [],
-								"url": {
-									"raw": "{{workspace-service}}/workspaces/current",
-									"host": [
-										"{{workspace-service}}"
-									],
-									"path": [
-										"workspaces",
-										"current"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"id": "20556562-8ee35a2d-3adb-4063-842f-c8f0c925949b"
-				}
-			],
-			"id": "20556562-26320a03-17c6-4547-925e-d484c67d8c55"
-		},
-		{
 			"name": "tags",
 			"item": [
 				{
@@ -214,6 +158,385 @@
 				}
 			],
 			"id": "20556562-dce8f638-75c7-426d-81ef-d556381751f8"
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "groups",
+					"item": [
+						{
+							"name": "/categories/groups",
+							"id": "20556562-f5b65af2-5f63-48d8-b2c3-9ad60145b031",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{workspace-service}}/categories/groups",
+									"host": [
+										"{{workspace-service}}"
+									],
+									"path": [
+										"categories",
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/categories/groups",
+							"id": "20556562-59250acb-eecf-4678-9a2a-fb8f12600506",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"category-group-0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{workspace-service}}/categories/groups",
+									"host": [
+										"{{workspace-service}}"
+									],
+									"path": [
+										"categories",
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/categories/groups/:id",
+							"id": "20556562-2a494766-3d27-4226-9825-5a37fa798a9e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{workspace-service}}/categories/groups/:id",
+									"host": [
+										"{{workspace-service}}"
+									],
+									"path": [
+										"categories",
+										"groups",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "b8cedb82-8c90-4c59-9429-135d87818c4c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/categories/groups/:id",
+							"id": "20556562-3c5557e9-b4eb-40d0-b5f7-1f5484c90554",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{workspace-service}}/categories/groups/:id",
+									"host": [
+										"{{workspace-service}}"
+									],
+									"path": [
+										"categories",
+										"groups",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "b8cedb82-8c90-4c59-9429-135d87818c4c"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/categories/groups/:id",
+							"id": "20556562-7548b625-a66a-457b-a01f-20562d8cb543",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"category-group-0\"\n}"
+								},
+								"url": {
+									"raw": "{{workspace-service}}/categories/groups/:id",
+									"host": [
+										"{{workspace-service}}"
+									],
+									"path": [
+										"categories",
+										"groups",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "b8cedb82-8c90-4c59-9429-135d87818c4c"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "20556562-88471e69-c88c-4b77-9864-e0c3a1b7d2a1"
+				},
+				{
+					"name": "/categories",
+					"id": "20556562-491dcaed-7089-48e6-89a6-8e7de95cdf0c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/categories",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories/tree",
+					"id": "20556562-fd30f778-b790-4d09-a3e5-5aa5a3f345a4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/categories/grouped",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"categories",
+								"grouped"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories",
+					"id": "20556562-d84fe81c-6e03-43e5-9c72-c94decb8fb1d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"category-0\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/categories",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories/:id",
+					"id": "20556562-122747ce-81b8-4081-b3e0-63701069e47f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/categories/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4ae65850-0da8-4d63-b608-18bb059d2992"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories/:id",
+					"id": "20556562-cbb0b18d-b0b1-4c7c-8d12-975fd9ac7b8c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/categories/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4ae65850-0da8-4d63-b608-18bb059d2992"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories/:id",
+					"id": "20556562-d28403fb-a684-4aaa-a7c5-00365e1b91c0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"new-name\",\n    \"groupId\": \"8d6cfe79-7723-4a83-8c9c-5bb97013a9be\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/categories/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2159c97b-3e56-4839-a642-b07750419c3c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "20556562-309efae8-2f6b-4655-b4e0-f276c1cf98ff"
+		},
+		{
+			"name": "current",
+			"item": [
+				{
+					"name": "/current",
+					"id": "20556562-ef8a1c20-cec2-47e3-b4e9-0ecb06668dcf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/current",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/current",
+					"id": "20556562-08eb0864-9935-4b99-b664-0213c03caf55",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Connor & Kyndall's Workspace\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/current",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "20556562-8ee35a2d-3adb-4063-842f-c8f0c925949b"
 		}
 	],
 	"auth": {
