@@ -37,15 +37,18 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CategoryDto>> getAllCategories(@WorkspaceId UUID workspaceId) {
-        List<CategoryDto> categories = categoryService.listAllDtosByWorkspaceId(workspaceId);
+        List<CategoryDto> categories = categoryService.listAllByWorkspaceId(workspaceId).stream()
+                .sorted(java.util.Comparator.comparing(Category::getCreatedAt))
+                .map(CategoryDto::fromEntity)
+                .toList();
         return ResponseEntity.ok(categories);
     }
 
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping(value = "/tree", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CategoryTreeDto>> getCategoryTree(@WorkspaceId UUID workspaceId) {
-        List<CategoryTreeDto> categories = categoryService.listCategoryTreeByWorkspaceId(workspaceId);
-        return ResponseEntity.ok(categories);
+        List<Category> categories = categoryService.listAllByWorkspaceId(workspaceId);
+        return ResponseEntity.ok(CategoryTreeDto.fromEntities(categories));
     }
 
     @PreAuthorize("hasAuthority('READ')")
@@ -54,8 +57,8 @@ public class CategoryController {
             @WorkspaceId UUID workspaceId,
             @PathVariable UUID categoryId
     ) {
-        CategoryDto category = categoryService.getCategoryDto(workspaceId, categoryId);
-        return ResponseEntity.ok(category);
+        Category category = categoryService.getCategory(workspaceId, categoryId);
+        return ResponseEntity.ok(CategoryDto.fromEntity(category));
     }
 
     @PreAuthorize("hasAuthority('WRITE')")
@@ -66,8 +69,7 @@ public class CategoryController {
             @Valid @RequestBody CreateCategoryDto categoryDto
     ) {
         Category category = categoryService.createCategory(userId, workspaceId, categoryDto);
-        CategoryDto payload = categoryService.getCategoryDto(workspaceId, category.getId());
-        return ResponseEntity.status(201).body(payload);
+        return ResponseEntity.status(201).body(CategoryDto.fromEntity(category));
     }
 
     @PreAuthorize("hasAuthority('WRITE')")
@@ -77,9 +79,8 @@ public class CategoryController {
             @PathVariable UUID categoryId,
             @Valid @RequestBody UpdateCategoryDto categoryDto
     ) {
-        categoryService.updateCategory(workspaceId, categoryId, categoryDto);
-        CategoryDto payload = categoryService.getCategoryDto(workspaceId, categoryId);
-        return ResponseEntity.ok(payload);
+        Category category = categoryService.updateCategory(workspaceId, categoryId, categoryDto);
+        return ResponseEntity.ok(CategoryDto.fromEntity(category));
     }
 
     @PreAuthorize("hasAuthority('WRITE')")

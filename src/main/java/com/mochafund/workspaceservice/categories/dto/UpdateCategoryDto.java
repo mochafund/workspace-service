@@ -23,7 +23,7 @@ public class UpdateCategoryDto {
 
     private String description;
     private CategoryStatus status;
-    private Boolean income;
+    private Boolean isIncome;
     private Boolean excludeFromBudget;
     private Boolean excludeFromTotals;
 
@@ -38,9 +38,5 @@ public class UpdateCategoryDto {
     public void assignParentId(UUID parentId) {
         this.parentId = parentId;
         this.parentIdSpecified = true;
-    }
-
-    public boolean isParentIdSpecified() {
-        return parentIdSpecified;
     }
 }

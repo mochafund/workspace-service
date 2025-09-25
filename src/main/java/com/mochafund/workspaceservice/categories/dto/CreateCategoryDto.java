@@ -20,7 +20,7 @@ public class CreateCategoryDto {
     private String name;
 
     private String description;
-    private Boolean income;
+    private Boolean isIncome;
     private Boolean excludeFromBudget;
     private Boolean excludeFromTotals;
     private UUID parentId;

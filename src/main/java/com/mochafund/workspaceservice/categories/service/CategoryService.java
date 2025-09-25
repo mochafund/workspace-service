@@ -1,7 +1,5 @@
 package com.mochafund.workspaceservice.categories.service;
 
-import com.mochafund.workspaceservice.categories.dto.CategoryDto;
-import com.mochafund.workspaceservice.categories.dto.CategoryTreeDto;
 import com.mochafund.workspaceservice.categories.dto.CreateCategoryDto;
 import com.mochafund.workspaceservice.categories.dto.UpdateCategoryDto;
 import com.mochafund.workspaceservice.categories.entity.Category;
@@ -14,12 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,49 +30,9 @@ public class CategoryService implements ICategoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryDto> listAllDtosByWorkspaceId(UUID workspaceId) {
-        return categoryRepository.findAllByWorkspaceId(workspaceId).stream()
-                .sorted(Comparator.comparing(Category::getName))
-                .map(CategoryDto::fromEntity)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<CategoryTreeDto> listCategoryTreeByWorkspaceId(UUID workspaceId) {
-        List<Category> categories = categoryRepository.findAllByWorkspaceId(workspaceId);
-        if (categories.isEmpty()) {
-            return List.of();
-        }
-
-        Map<UUID, List<Category>> byParent = new HashMap<>();
-        for (Category category : categories) {
-            UUID parentId = category.getParentId();
-            byParent.computeIfAbsent(parentId, key -> new ArrayList<>()).add(category);
-        }
-
-        return buildTree(null, byParent);
-    }
-
-    private List<CategoryTreeDto> buildTree(UUID parentId, Map<UUID, List<Category>> byParent) {
-        return byParent.getOrDefault(parentId, List.of()).stream()
-                .sorted(Comparator.comparing(Category::getName))
-                .map(category -> {
-                    List<CategoryTreeDto> children = buildTree(category.getId(), byParent);
-                    return CategoryTreeDto.fromEntity(category, children);
-                })
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
     public Category getCategory(UUID workspaceId, UUID categoryId) {
         return categoryRepository.findByWorkspaceIdAndId(workspaceId, categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-    }
-
-    @Transactional(readOnly = true)
-    public CategoryDto getCategoryDto(UUID workspaceId, UUID categoryId) {
-        Category category = getCategory(workspaceId, categoryId);
-        return CategoryDto.fromEntity(category);
     }
 
     @Transactional
@@ -88,7 +42,7 @@ public class CategoryService implements ICategoryService {
             validateParent(workspaceId, parentId);
         }
 
-        boolean income = Boolean.TRUE.equals(categoryDto.getIncome());
+        boolean income = Boolean.TRUE.equals(categoryDto.getIsIncome());
         boolean excludeFromBudget = Boolean.TRUE.equals(categoryDto.getExcludeFromBudget());
         boolean excludeFromTotals = Boolean.TRUE.equals(categoryDto.getExcludeFromTotals());
 
@@ -130,15 +84,13 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.save(category);
     }
 
-    private Category validateParent(UUID workspaceId, UUID parentId) {
+    private void validateParent(UUID workspaceId, UUID parentId) {
         Category parent = categoryRepository.findByWorkspaceIdAndId(workspaceId, parentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent category not found"));
 
         if (parent.getParentId() != null) {
             throw new BadRequestException("Parent category cannot have its own parent (maximum depth is 2)");
         }
-
-        return parent;
     }
 
     private void ensureNoCircularReference(UUID categoryId, UUID parentId) {
