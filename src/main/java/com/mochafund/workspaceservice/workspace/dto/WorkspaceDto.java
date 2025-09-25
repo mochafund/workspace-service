@@ -19,13 +19,14 @@ import java.util.List;
 @SuperBuilder(toBuilder = true)
 public class WorkspaceDto extends BaseDto {
 
-    private String tempField;
+    private String name;
 
     public static WorkspaceDto fromEntity(Workspace workspace) {
         return WorkspaceDto.builder()
                 .id(workspace.getId())
                 .createdAt(workspace.getCreatedAt())
                 .updatedAt(workspace.getUpdatedAt())
+                .name(workspace.getName())
                 .build();
     }
 

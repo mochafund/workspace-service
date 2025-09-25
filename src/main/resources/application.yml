@@ -42,7 +42,7 @@ spring:
         spring.json.type.mapping: "com.mochafund.identityservice.workspace.events.WorkspaceEvent:com.mochafund.workspaceservice.workspace.events.WorkspaceEvent"
     topics:
       - workspace.provisioning
-      - workspace.deleted
+      - workspace.deleted.initialized
 
   security:
     oauth2:

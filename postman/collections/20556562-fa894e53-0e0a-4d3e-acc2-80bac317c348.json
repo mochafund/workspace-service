@@ -1,0 +1,333 @@
+{
+	"info": {
+		"_postman_id": "20556562-fa894e53-0e0a-4d3e-acc2-80bac317c348",
+		"name": "workspace-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "workspaces",
+			"item": [
+				{
+					"name": "current",
+					"item": [
+						{
+							"name": "/workspaces/current",
+							"id": "20556562-ef8a1c20-cec2-47e3-b4e9-0ecb06668dcf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{workspace-service}}/workspaces/current",
+									"host": [
+										"{{workspace-service}}"
+									],
+									"path": [
+										"workspaces",
+										"current"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/workspaces/current",
+							"id": "20556562-08eb0864-9935-4b99-b664-0213c03caf55",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{workspace-service}}/workspaces/current",
+									"host": [
+										"{{workspace-service}}"
+									],
+									"path": [
+										"workspaces",
+										"current"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "20556562-8ee35a2d-3adb-4063-842f-c8f0c925949b"
+				}
+			],
+			"id": "20556562-26320a03-17c6-4547-925e-d484c67d8c55"
+		},
+		{
+			"name": "tags",
+			"item": [
+				{
+					"name": "/tags",
+					"id": "20556562-cdea5202-5406-4a0d-a51f-08824d64679e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/tags",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags",
+					"id": "20556562-782c19a8-5048-4536-aa7d-5690972948bc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"deez-nutz\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-59a9e089-390c-4e72-8e22-912af6aa1f5d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"poop\"\n}"
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-d12c64a5-eda3-4c73-99ff-4092855abb6c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7c543bd1-998f-4849-a6f1-478c323f4117"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-461b58af-6735-4a21-b4ea-a47539349661",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"poop-deez-nuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "20556562-dce8f638-75c7-426d-81ef-d556381751f8"
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenName",
+				"value": "workspace-service-token",
+				"type": "string"
+			},
+			{
+				"key": "authRequestParams",
+				"value": [
+					{
+						"key": "login_hint",
+						"value": "john@np.com",
+						"enabled": true,
+						"send_as": "request_url"
+					},
+					{
+						"key": "prompt",
+						"value": "login",
+						"enabled": true,
+						"send_as": "request_url"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/callback",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{client-secret}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{client-id}}",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "{{access-token-url}}",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "{{auth-url}}",
+				"type": "string"
+			},
+			{
+				"key": "refreshRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "tokenRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid profile roles email",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code_with_pkce",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "76d2c44a-ec1b-4500-9cb3-433acf146335",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ce1e4d31-5b7a-4c80-ba3c-11d638240f9d",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

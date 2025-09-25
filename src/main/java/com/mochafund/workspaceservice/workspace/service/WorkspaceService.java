@@ -1,6 +1,10 @@
 package com.mochafund.workspaceservice.workspace.service;
 
+import com.mochafund.workspaceservice.common.exception.ResourceNotFoundException;
+import com.mochafund.workspaceservice.kafka.KafkaProducer;
+import com.mochafund.workspaceservice.workspace.dto.UpdateWorkspaceDto;
 import com.mochafund.workspaceservice.workspace.entity.Workspace;
+import com.mochafund.workspaceservice.workspace.events.WorkspaceEvent;
 import com.mochafund.workspaceservice.workspace.repository.IWorkspaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,12 +19,65 @@ import java.util.UUID;
 public class WorkspaceService implements IWorkspaceService {
 
     private final IWorkspaceRepository workspaceRepository;
+    private final KafkaProducer kafkaProducer;
+
+    @Transactional(readOnly = true)
+    public Workspace getWorkspace(UUID workspaceId) {
+        return workspaceRepository.findById(workspaceId).orElseThrow(
+                () -> new ResourceNotFoundException("Workspace not found"));
+    }
 
     @Transactional
-    public Workspace createWorkspace(UUID workspaceId) {
-        return workspaceRepository.save(Workspace.builder()
-                .id(workspaceId)
+    public Workspace createWorkspace(WorkspaceEvent.Data workspaceEvent) {
+        Workspace workspace = workspaceRepository.save(Workspace.builder()
+                .id(workspaceEvent.workspaceId())
+                .name(workspaceEvent.name())
                 .build()
         );
+
+        kafkaProducer.send(WorkspaceEvent.builder()
+                .type("workspace.created")
+                .data(WorkspaceEvent.Data.builder()
+                        .workspaceId(workspace.getId())
+                        .name(workspace.getName())
+                        .build())
+                .build());
+
+        return workspace;
+    }
+
+    @Transactional
+    public Workspace updateWorkspace(UUID workspaceId, UpdateWorkspaceDto workspaceDto) {
+        log.info("Updating workspace with ID: {}", workspaceId);
+
+        Workspace workspace = this.getWorkspace(workspaceId);
+        workspace.patchFrom(workspaceDto);
+        Workspace updatedWorkspace = workspaceRepository.save(workspace);
+
+        kafkaProducer.send(WorkspaceEvent.builder()
+                .type("workspace.updated")
+                .data(WorkspaceEvent.Data.builder()
+                        .workspaceId(updatedWorkspace.getId())
+                        .name(updatedWorkspace.getName())
+                        .build())
+                .build());
+
+        return updatedWorkspace;
+    }
+
+    @Transactional
+    public void deleteWorkspace(UUID workspaceId) {
+        Workspace workspace = workspaceRepository.findById(workspaceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Workspace not found"));
+
+        workspaceRepository.deleteById(workspace.getId());
+
+        kafkaProducer.send(WorkspaceEvent.builder()
+                .type("workspace.deleted")
+                .data(WorkspaceEvent.Data.builder()
+                        .workspaceId(workspace.getId())
+                        .name(workspace.getName())
+                        .build())
+                .build());
     }
 }
