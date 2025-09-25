@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Income",
+    "description": "Recurring and ad-hoc income sources",
+    "income": true,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Primary Salary",
+        "description": "Regular paychecks",
+        "income": true,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Side Hustles",
+        "description": "Freelance or gig income",
+        "income": true,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Investment Returns",
+        "description": "Dividends, interest, etc.",
+        "income": true,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
+    "name": "Food",
+    "description": "Day-to-day food spending",
+    "income": false,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Groceries",
+        "description": "Household groceries",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Restaurants",
+        "description": "Dining out",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Coffee Shops",
+        "description": "Cafe stops & specialty drinks",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Delivery",
+        "description": "Food delivery and takeout",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
+    "name": "Home & Auto",
+    "description": "Housing and transportation essentials",
+    "income": false,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Housing",
+        "description": "Rent or mortgage",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Utilities",
+        "description": "Power, water, internet, etc.",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Auto & Fuel",
+        "description": "Fuel, maintenance, and insurance",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Ridesharing",
+        "description": "Uber, Lyft, and taxis",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
+    "name": "Lifestyle",
+    "description": "Personal and family spending",
+    "income": false,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Childcare",
+        "description": "Babysitting, daycare, activities",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Personal Care",
+        "description": "Haircuts, cosmetics, salon",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Pets",
+        "description": "Food, grooming, vet visits",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Self Improvement",
+        "description": "Gym, classes, education",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Shopping",
+        "description": "Clothing and discretionary shopping",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
+    "name": "Transfers & Payments",
+    "description": "Internal transfers and credit card payments",
+    "income": false,
+    "excludeFromBudget": true,
+    "excludeFromTotals": true,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Internal Transfer",
+        "description": "Moving funds between accounts",
+        "income": false,
+        "excludeFromBudget": true,
+        "excludeFromTotals": true
+      },
+      {
+        "name": "Credit Card Payment",
+        "description": "Paying off credit balances",
+        "income": false,
+        "excludeFromBudget": true,
+        "excludeFromTotals": true
+      }
+    ]
+  }
+]
