@@ -7,19 +7,21 @@ import com.mochafund.workspaceservice.categories.dto.UpdateCategoryDto;
 import com.mochafund.workspaceservice.categories.entity.Category;
 import com.mochafund.workspaceservice.categories.enums.CategoryStatus;
 import com.mochafund.workspaceservice.categories.repository.ICategoryRepository;
+import com.mochafund.workspaceservice.common.exception.BadRequestException;
 import com.mochafund.workspaceservice.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -48,10 +50,10 @@ public class CategoryService implements ICategoryService {
             return List.of();
         }
 
-        Map<UUID, List<Category>> byParent = new java.util.HashMap<>();
+        Map<UUID, List<Category>> byParent = new HashMap<>();
         for (Category category : categories) {
             UUID parentId = category.getParentId();
-            byParent.computeIfAbsent(parentId, key -> new java.util.ArrayList<>()).add(category);
+            byParent.computeIfAbsent(parentId, key -> new ArrayList<>()).add(category);
         }
 
         return buildTree(null, byParent);
@@ -117,7 +119,7 @@ public class CategoryService implements ICategoryService {
             UUID parentId = categoryDto.getParentId();
             if (parentId != null) {
                 if (parentId.equals(categoryId)) {
-                    throw new IllegalArgumentException("Category cannot be its own parent");
+                    throw new BadRequestException("Category cannot be its own parent");
                 }
                 validateParent(workspaceId, parentId);
                 ensureNoCircularReference(categoryId, parentId);
@@ -125,22 +127,18 @@ public class CategoryService implements ICategoryService {
             category.setParentId(parentId);
         }
 
-        if (categoryDto.getIncome() != null) {
-            category.setIncome(categoryDto.getIncome());
-        }
-        if (categoryDto.getExcludeFromBudget() != null) {
-            category.setExcludeFromBudget(categoryDto.getExcludeFromBudget());
-        }
-        if (categoryDto.getExcludeFromTotals() != null) {
-            category.setExcludeFromTotals(categoryDto.getExcludeFromTotals());
-        }
-
         return categoryRepository.save(category);
     }
 
-    private void validateParent(UUID workspaceId, UUID parentId) {
-        categoryRepository.findByWorkspaceIdAndId(workspaceId, parentId)
+    private Category validateParent(UUID workspaceId, UUID parentId) {
+        Category parent = categoryRepository.findByWorkspaceIdAndId(workspaceId, parentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent category not found"));
+
+        if (parent.getParentId() != null) {
+            throw new BadRequestException("Parent category cannot have its own parent (maximum depth is 2)");
+        }
+
+        return parent;
     }
 
     private void ensureNoCircularReference(UUID categoryId, UUID parentId) {
@@ -149,7 +147,7 @@ public class CategoryService implements ICategoryService {
 
         while (current != null) {
             if (!visited.add(current) || categoryId.equals(current)) {
-                throw new IllegalArgumentException("Circular category relationship detected");
+                throw new BadRequestException("Circular category relationship detected");
             }
 
             current = categoryRepository.findById(current)
