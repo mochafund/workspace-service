@@ -43,6 +43,7 @@ spring:
     topics:
       - workspace.provisioning
       - workspace.deleted.initialized
+      - workspace.created
 
   security:
     oauth2:
