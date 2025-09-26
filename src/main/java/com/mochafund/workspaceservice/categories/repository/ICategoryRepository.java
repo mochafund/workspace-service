@@ -11,4 +11,5 @@ public interface ICategoryRepository extends JpaRepository<Category, UUID> {
     Optional<Category> findByWorkspaceIdAndId(UUID workspaceId, UUID categoryId);
     List<Category> findAllByWorkspaceId(UUID workspaceId);
     void deleteByWorkspaceIdAndId(UUID workspaceId, UUID categoryId);
+    boolean existsByWorkspaceId(UUID workspaceId);
 }

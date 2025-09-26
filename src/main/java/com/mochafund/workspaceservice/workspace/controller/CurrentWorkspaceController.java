@@ -22,7 +22,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/workspaces/current")
+@RequestMapping("/current")
 public class CurrentWorkspaceController {
 
     private final IWorkspaceService workspaceService;

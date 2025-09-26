@@ -4,6 +4,7 @@ import com.mochafund.workspaceservice.common.util.CorrelationIdUtil;
 import com.mochafund.workspaceservice.workspace.entity.Workspace;
 import com.mochafund.workspaceservice.workspace.events.WorkspaceEvent;
 import com.mochafund.workspaceservice.workspace.service.IWorkspaceService;
+import com.mochafund.workspaceservice.workspace.util.WorkspaceDefaultsSeeder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class WorkspaceEventConsumer {
 
     private final IWorkspaceService workspaceService;
+    private final WorkspaceDefaultsSeeder workspaceDefaultsSeeder;
 
     @KafkaListener(topics = "workspace.provisioning", groupId = "workspace-service")
     public void handleWorkspaceProvisioning(WorkspaceEvent event) {
@@ -23,6 +25,18 @@ public class WorkspaceEventConsumer {
 
             Workspace workspace = workspaceService.createWorkspace(event.getData());
             log.info("Successfully created workspace {}", workspace.getId());
+        });
+    }
+
+    @KafkaListener(topics = "workspace.created", groupId = "workspace-service")
+    public void handleWorkspaceCreated(WorkspaceEvent event) {
+        CorrelationIdUtil.executeWithCorrelationId(event, () -> {
+            log.info("Processing workspace.created- Workspace: {}", event.getData().workspaceId());
+            try {
+                workspaceDefaultsSeeder.seedDefaults(event.getData().workspaceId());
+            } catch (Exception ex) {
+                log.error("Failed to seed defaults for workspace {}", event.getData().workspaceId(), ex);
+            }
         });
     }
 

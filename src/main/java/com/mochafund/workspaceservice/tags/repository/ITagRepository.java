@@ -11,4 +11,5 @@ public interface ITagRepository extends JpaRepository<Tag, UUID> {
     Optional<Tag> findByWorkspaceIdAndId(UUID workspaceId, UUID tagId);
     List<Tag> findAllByWorkspaceId(UUID workspaceId);
     void deleteByWorkspaceIdAndId(UUID workspaceId, UUID tagId);
+    boolean existsByWorkspaceId(UUID workspaceId);
 }
