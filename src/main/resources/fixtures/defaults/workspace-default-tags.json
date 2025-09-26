@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Recurring Bill",
+    "description": "Applies to monthly or annual obligations",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "One-Time",
+    "description": "Unexpected or one-off purchases",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "Reimbursable",
+    "description": "Expenses to be reimbursed by employer or others",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "Tax Deductible",
+    "description": "Potential deductions for tax filing",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "High Priority",
+    "description": "Critical payments to watch closely",
+    "status": "ACTIVE"
+  },
+  {
+    "name": "Discretionary",
+    "description": "Nice-to-have or lifestyle spending",
+    "status": "ACTIVE"
+  }
+]

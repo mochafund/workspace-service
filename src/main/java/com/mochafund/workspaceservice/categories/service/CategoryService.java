@@ -87,6 +87,15 @@ public class CategoryService implements ICategoryService {
         return categoryRepository.save(category);
     }
 
+    @Transactional
+    public void deleteCategory(UUID workspaceId, UUID categoryId) {
+        Category category = this.getCategory(workspaceId, categoryId);
+
+        log.info("Deleting categoryId={}", category.getId());
+
+        categoryRepository.deleteByWorkspaceIdAndId(category.getWorkspaceId(), category.getId());
+    }
+
     private void validateParent(UUID workspaceId, UUID parentId) {
         Category parent = categoryRepository.findByWorkspaceIdAndId(workspaceId, parentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent category not found"));
@@ -109,14 +118,5 @@ public class CategoryService implements ICategoryService {
                     .map(Category::getParentId)
                     .orElse(null);
         }
-    }
-
-    @Transactional
-    public void deleteCategory(UUID workspaceId, UUID categoryId) {
-        Category category = this.getCategory(workspaceId, categoryId);
-
-        log.info("Deleting categoryId={}", category.getId());
-
-        categoryRepository.deleteByWorkspaceIdAndId(category.getWorkspaceId(), category.getId());
     }
 }
