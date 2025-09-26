@@ -45,7 +45,7 @@ public class CategoryController {
     @GetMapping(value = "/tree", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CategoryTreeDto>> getCategoryTree(@WorkspaceId UUID workspaceId) {
         List<Category> categories = categoryService.listAllByWorkspaceId(workspaceId);
-        return ResponseEntity.ok(CategoryTreeDto.fromEntities(categories));
+        return ResponseEntity.ok(CategoryTreeDto.buildTree(categories));
     }
 
     @PreAuthorize("hasAuthority('READ')")
