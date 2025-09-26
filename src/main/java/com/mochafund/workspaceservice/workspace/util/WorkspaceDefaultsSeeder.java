@@ -1,15 +1,13 @@
 package com.mochafund.workspaceservice.workspace.util;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mochafund.workspaceservice.categories.entity.Category;
 import com.mochafund.workspaceservice.categories.enums.CategoryStatus;
 import com.mochafund.workspaceservice.categories.repository.ICategoryRepository;
-import com.mochafund.workspaceservice.categories.seed.CategorySeed;
 import com.mochafund.workspaceservice.tags.entity.Tag;
 import com.mochafund.workspaceservice.tags.enums.TagStatus;
 import com.mochafund.workspaceservice.tags.repository.ITagRepository;
-import com.mochafund.workspaceservice.tags.seed.TagSeed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -54,52 +52,57 @@ public class WorkspaceDefaultsSeeder {
     }
 
     private void seedCategories(UUID workspaceId) {
-        List<CategorySeed> seeds = readCategoriesFixture();
-        if (seeds.isEmpty()) {
+        JsonNode root = readFixture(CATEGORY_FIXTURE_PATH);
+        if (root == null || !root.isArray() || root.isEmpty()) {
             log.warn("Category fixture empty; nothing to seed for workspace {}", workspaceId);
             return;
         }
 
-        for (CategorySeed seed : seeds) {
-            Category parent = categoryRepository.save(buildCategoryEntity(seed, workspaceId, null));
-            if (!seed.children().isEmpty()) {
-                List<Category> children = new ArrayList<>();
-                for (CategorySeed childSeed : seed.children()) {
-                    children.add(buildCategoryEntity(childSeed, workspaceId, parent.getId()));
-                }
-                categoryRepository.saveAll(children);
-            }
+        for (JsonNode node : root) {
+            persistCategoryTree(workspaceId, node, null);
         }
 
-        log.info("Seeded {} default category groups for workspace {}", seeds.size(), workspaceId);
+        log.info("Seeded {} default category groups for workspace {}", root.size(), workspaceId);
+    }
+
+    private void persistCategoryTree(UUID workspaceId, JsonNode node, UUID parentId) {
+        Category category = categoryRepository.save(buildCategoryEntity(workspaceId, parentId, node));
+
+        JsonNode children = node.get("children");
+        if (children != null && children.isArray()) {
+            for (JsonNode child : children) {
+                persistCategoryTree(workspaceId, child, category.getId());
+            }
+        }
     }
 
     private void seedTags(UUID workspaceId) {
-        List<TagSeed> seeds = readTagFixture();
-        if (seeds.isEmpty()) {
+        JsonNode root = readFixture(TAG_FIXTURE_PATH);
+        if (root == null || !root.isArray() || root.isEmpty()) {
             log.warn("Tag fixture empty; nothing to seed for workspace {}", workspaceId);
             return;
         }
 
-        List<Tag> tags = seeds.stream()
-                .map(seed -> buildTagEntity(seed, workspaceId))
-                .toList();
-        tagRepository.saveAll(tags);
+        List<Tag> tags = new ArrayList<>();
+        for (JsonNode node : root) {
+            tags.add(buildTagEntity(workspaceId, node));
+        }
 
-        log.info("Seeded {} default tags for workspace {}", seeds.size(), workspaceId);
+        tagRepository.saveAll(tags);
+        log.info("Seeded {} default tags for workspace {}", tags.size(), workspaceId);
     }
 
-    private Category buildCategoryEntity(CategorySeed seed, UUID workspaceId, UUID parentId) {
-        boolean income = Boolean.TRUE.equals(seed.income());
-        boolean excludeFromBudget = Boolean.TRUE.equals(seed.excludeFromBudget());
-        boolean excludeFromTotals = Boolean.TRUE.equals(seed.excludeFromTotals());
+    private Category buildCategoryEntity(UUID workspaceId, UUID parentId, JsonNode node) {
+        boolean income = node.path("income").asBoolean(false);
+        boolean excludeFromBudget = node.path("excludeFromBudget").asBoolean(false);
+        boolean excludeFromTotals = node.path("excludeFromTotals").asBoolean(false);
 
         return Category.builder()
                 .workspaceId(workspaceId)
                 .createdBy(workspaceId)
                 .parentId(parentId)
-                .name(seed.name())
-                .description(seed.description())
+                .name(node.path("name").asText())
+                .description(node.path("description").isNull() ? null : node.get("description").asText())
                 .isIncome(income)
                 .excludeFromBudget(excludeFromBudget)
                 .excludeFromTotals(excludeFromTotals)
@@ -107,42 +110,32 @@ public class WorkspaceDefaultsSeeder {
                 .build();
     }
 
-    private Tag buildTagEntity(TagSeed seed, UUID workspaceId) {
+    private Tag buildTagEntity(UUID workspaceId, JsonNode node) {
         TagStatus status = TagStatus.ACTIVE;
-        if (seed.status() != null) {
+        if (node.hasNonNull("status")) {
             try {
-                status = TagStatus.valueOf(seed.status().toUpperCase());
+                status = TagStatus.valueOf(node.get("status").asText().toUpperCase());
             } catch (IllegalArgumentException ex) {
-                log.warn("Unknown tag status '{}' in fixture; defaulting to ACTIVE", seed.status());
+                log.warn("Unknown tag status '{}' in fixture; defaulting to ACTIVE", node.get("status").asText());
             }
         }
 
         return Tag.builder()
                 .workspaceId(workspaceId)
                 .createdBy(workspaceId)
-                .name(seed.name())
-                .description(seed.description())
+                .name(node.path("name").asText())
+                .description(node.path("description").isNull() ? null : node.get("description").asText())
                 .status(status)
                 .build();
     }
 
-    private List<CategorySeed> readCategoriesFixture() {
+    private JsonNode readFixture(String path) {
         try {
-            Resource resource = resourceLoader.getResource(CATEGORY_FIXTURE_PATH);
-            return objectMapper.readValue(resource.getInputStream(), new TypeReference<>() {});
+            Resource resource = resourceLoader.getResource(path);
+            return objectMapper.readTree(resource.getInputStream());
         } catch (IOException ex) {
-            log.error("Failed to read category fixture", ex);
-            return List.of();
-        }
-    }
-
-    private List<TagSeed> readTagFixture() {
-        try {
-            Resource resource = resourceLoader.getResource(TAG_FIXTURE_PATH);
-            return objectMapper.readValue(resource.getInputStream(), new TypeReference<>() {});
-        } catch (IOException ex) {
-            log.error("Failed to read tag fixture", ex);
-            return List.of();
+            log.error("Failed to read fixture {}", path, ex);
+            return null;
         }
     }
 }
