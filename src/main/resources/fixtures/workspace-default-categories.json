@@ -27,6 +27,13 @@
         "income": true,
         "excludeFromBudget": false,
         "excludeFromTotals": false
+      },
+      {
+        "name": "Reimbursements & Refunds",
+        "description": "Employer reimbursements or refunded purchases",
+        "income": true,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
       }
     ]
   },
@@ -62,6 +69,44 @@
       {
         "name": "Delivery",
         "description": "Food delivery and takeout",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
+    "name": "Savings & Goals",
+    "description": "Buckets for planned savings and future expenses",
+    "income": false,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Emergency Fund",
+        "description": "Set aside for unexpected costs",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Vacation Fund",
+        "description": "Trips, travel, and time away",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Vehicle Replacement",
+        "description": "Saving toward your next car",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Kids & Education",
+        "description": "Long-term education or childcare savings",
         "income": false,
         "excludeFromBudget": false,
         "excludeFromTotals": false
@@ -107,6 +152,44 @@
     ]
   },
   {
+    "name": "Health & Insurance",
+    "description": "Medical costs and insurance premiums",
+    "income": false,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Health Insurance",
+        "description": "Medical insurance premiums",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Medical & Pharmacy",
+        "description": "Doctor visits, prescriptions, supplies",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Dental & Vision",
+        "description": "Dental cleanings, eyewear, contacts",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Life & Disability",
+        "description": "Life and disability premiums",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
     "name": "Lifestyle",
     "description": "Personal and family spending",
     "income": false,
@@ -145,6 +228,61 @@
       {
         "name": "Shopping",
         "description": "Clothing and discretionary shopping",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
+    "name": "Debt Payments",
+    "description": "Scheduled loan and credit payments",
+    "income": false,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Credit Card Minimums",
+        "description": "Minimum payments on revolving credit",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Student Loans",
+        "description": "Monthly student loan payments",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Auto Loans",
+        "description": "Car loan payments",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      }
+    ]
+  },
+  {
+    "name": "Taxes",
+    "description": "Planning for estimated and annual taxes",
+    "income": false,
+    "excludeFromBudget": false,
+    "excludeFromTotals": false,
+    "parentId": null,
+    "children": [
+      {
+        "name": "Quarterly Taxes",
+        "description": "Estimated quarterly tax payments",
+        "income": false,
+        "excludeFromBudget": false,
+        "excludeFromTotals": false
+      },
+      {
+        "name": "Withholding Adjustments",
+        "description": "Catch-up for annual tax filings",
         "income": false,
         "excludeFromBudget": false,
         "excludeFromTotals": false
