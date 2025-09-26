@@ -37,11 +37,8 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CategoryDto>> getAllCategories(@WorkspaceId UUID workspaceId) {
-        List<CategoryDto> categories = categoryService.listAllByWorkspaceId(workspaceId).stream()
-                .sorted(java.util.Comparator.comparing(Category::getCreatedAt))
-                .map(CategoryDto::fromEntity)
-                .toList();
-        return ResponseEntity.ok(categories);
+        List<Category> categories = categoryService.listAllByWorkspaceId(workspaceId);
+        return ResponseEntity.ok(CategoryDto.fromEntities(categories));
     }
 
     @PreAuthorize("hasAuthority('READ')")

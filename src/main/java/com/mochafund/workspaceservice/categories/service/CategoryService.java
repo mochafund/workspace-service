@@ -26,7 +26,10 @@ public class CategoryService implements ICategoryService {
 
     @Transactional(readOnly = true)
     public List<Category> listAllByWorkspaceId(UUID workspaceId) {
-        return categoryRepository.findAllByWorkspaceId(workspaceId);
+        return categoryRepository.findAllByWorkspaceId(workspaceId)
+                .stream()
+                .sorted(java.util.Comparator.comparing(Category::getName))
+                .toList();
     }
 
     @Transactional(readOnly = true)
