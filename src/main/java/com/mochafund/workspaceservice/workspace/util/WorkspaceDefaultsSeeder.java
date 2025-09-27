@@ -2,12 +2,12 @@ package com.mochafund.workspaceservice.workspace.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mochafund.workspaceservice.categories.entity.Category;
-import com.mochafund.workspaceservice.categories.enums.CategoryStatus;
-import com.mochafund.workspaceservice.categories.repository.ICategoryRepository;
-import com.mochafund.workspaceservice.tags.entity.Tag;
-import com.mochafund.workspaceservice.tags.enums.TagStatus;
-import com.mochafund.workspaceservice.tags.repository.ITagRepository;
+import com.mochafund.workspaceservice.category.entity.Category;
+import com.mochafund.workspaceservice.category.enums.CategoryStatus;
+import com.mochafund.workspaceservice.category.repository.ICategoryRepository;
+import com.mochafund.workspaceservice.tag.entity.Tag;
+import com.mochafund.workspaceservice.tag.enums.TagStatus;
+import com.mochafund.workspaceservice.tag.repository.ITagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;

@@ -1,10 +1,10 @@
 package com.mochafund.workspaceservice.workspace.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mochafund.workspaceservice.categories.entity.Category;
+import com.mochafund.workspaceservice.category.entity.Category;
 import com.mochafund.workspaceservice.common.annotations.PatchableField;
 import com.mochafund.workspaceservice.common.patchable.Patchable;
-import com.mochafund.workspaceservice.tags.entity.Tag;
+import com.mochafund.workspaceservice.tag.entity.Tag;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

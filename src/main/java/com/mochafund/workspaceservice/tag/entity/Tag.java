@@ -1,0 +1,57 @@
+package com.mochafund.workspaceservice.tag.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mochafund.workspaceservice.common.annotations.PatchableField;
+import com.mochafund.workspaceservice.common.entity.BaseEntity;
+import com.mochafund.workspaceservice.common.patchable.Patchable;
+import com.mochafund.workspaceservice.tag.enums.TagStatus;
+import com.mochafund.workspaceservice.workspace.entity.Workspace;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicUpdate;
+
+import java.util.UUID;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@SuperBuilder
+@DynamicUpdate
+@Entity
+@Table(name = "tags")
+public class Tag extends BaseEntity implements Patchable {
+
+    @Column(name = "workspace_id", nullable = false)
+    private UUID workspaceId;
+
+    @Column(name = "created_by", nullable = false)
+    private UUID createdBy;
+
+    @PatchableField
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @PatchableField
+    @Column(name = "description")
+    private String description;
+
+    @PatchableField
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private TagStatus status = TagStatus.ACTIVE;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "workspace_id", insertable = false, updatable = false)
+    private Workspace workspace;
+
+}
