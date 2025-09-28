@@ -15,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,6 +41,7 @@ public class Account extends BaseEntity implements Patchable {
     private UUID createdBy;
 
     @PatchableField
+    @Builder.Default
     @Column(name = "balance", nullable = false)
     private BigDecimal balance = BigDecimal.ZERO;
 
@@ -52,6 +54,8 @@ public class Account extends BaseEntity implements Patchable {
     private String displayName;
 
     @PatchableField
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
     @Column(name = "currency", nullable = false)
     private CurrencyCode currency = CurrencyCode.USD;
 
@@ -59,11 +63,13 @@ public class Account extends BaseEntity implements Patchable {
     @Column(name = "institution_name")
     private String institutionName;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "source", nullable = false)
-    private AccountSource source;
+    private AccountSource source = AccountSource.MANUAL;
 
     @PatchableField
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private AccountStatus status = AccountStatus.ACTIVE;

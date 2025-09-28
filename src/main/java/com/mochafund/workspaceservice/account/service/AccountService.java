@@ -42,7 +42,6 @@ public class AccountService implements IAccountService {
                 .displayName(accountDto.getDisplayName())
                 .currency(accountDto.getCurrency())
                 .institutionName(accountDto.getInstitutionName())
-                .status(accountDto.getStatus())
                 .source(accountDto.getSource())
                 .type(accountDto.getType())
                 .subType(accountDto.getSubType())

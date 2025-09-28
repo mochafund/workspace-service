@@ -28,7 +28,7 @@ public class CreateAccountDto implements AccountTypeSubTypeCarrier {
     @Size(max = 120, message = "Account name must be at most 120 characters")
     private String name;
 
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @Size(max = 120, message = "Display name must be at most 120 characters")
     private String displayName;
@@ -36,14 +36,9 @@ public class CreateAccountDto implements AccountTypeSubTypeCarrier {
     @Size(max = 120, message = "Institution name must be at most 120 characters")
     private String institutionName;
 
-    @NotNull(message = "Currency must be provided")
-    private CurrencyCode currency;
+    private CurrencyCode currency = CurrencyCode.USD;
 
-    @NotNull(message = "Account source must be provided")
-    private AccountSource source;
-
-    @NotNull(message = "Account status must be provided")
-    private AccountStatus status;
+    private AccountSource source = AccountSource.MANUAL;
 
     @NotNull(message = "Account type must be provided")
     private AccountType type;
