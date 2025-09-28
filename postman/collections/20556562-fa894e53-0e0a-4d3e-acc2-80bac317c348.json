@@ -193,13 +193,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{workspace-service}}/categories/grouped",
+							"raw": "{{workspace-service}}/categories/tree",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
 								"categories",
-								"grouped"
+								"tree"
 							]
 						}
 					},
