@@ -286,7 +286,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"poop-deez-nuts\"\n}",
+							"raw": "{\n    \"name\": \"poop-deez-nuts-account\",\n    \"displayName\": \"wowza\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -294,19 +294,18 @@
 							}
 						},
 						"url": {
-							"raw": "{{workspace-service}}/tags/:id",
+							"raw": "{{workspace-service}}/accounts/:id",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags",
+								"accounts",
 								":id"
 							],
 							"variable": [
 								{
-									"id": "63d3dbf1-79f8-48dd-b74b-b75389dd3376",
 									"key": "id",
-									"value": ""
+									"value": "b8eccb39-37b6-43ff-8f7c-8ff69111aaac"
 								}
 							]
 						}
