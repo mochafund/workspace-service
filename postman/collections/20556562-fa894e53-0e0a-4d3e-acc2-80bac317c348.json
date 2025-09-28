@@ -40,7 +40,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"deez-nutz\"\n}",
+							"raw": "{\n    \"name\": \"mary-tag-1\",\n    \"description\": \"test-description\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
