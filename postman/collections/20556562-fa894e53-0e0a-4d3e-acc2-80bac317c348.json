@@ -194,7 +194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"NFCU Checking 7812\",\n    \"institution_name\": \"Navy Federal Credit Union\",\n    \"type\": \"CASH\",\n    \"sub_type\": \"CHECKING\"\n}",
+							"raw": "{\n    \"name\": \"NFCU Checking 7812\",\n    \"institutionName\": \"Navy Federal Credit Union\",\n    \"type\": \"CASH\",\n    \"subType\": \"CHECKING\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
