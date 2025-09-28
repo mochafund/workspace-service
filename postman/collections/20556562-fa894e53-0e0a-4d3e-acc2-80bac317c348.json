@@ -276,7 +276,7 @@
 					"response": []
 				},
 				{
-					"name": "/tags/:id",
+					"name": "/accounts/:id",
 					"id": "20556562-a063a7fe-0a3b-47b4-a303-fce1db6395a3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
