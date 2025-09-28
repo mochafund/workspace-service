@@ -194,7 +194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"deez-nutz\"\n}",
+							"raw": "{\n    \"name\": \"NFCU Checking 7812\",\n    \"institution_name\": \"Navy Federal Credit Union\",\n    \"type\": \"CASH\",\n    \"sub_type\": \"CHECKING\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,12 +202,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{workspace-service}}/tags",
+							"raw": "{{workspace-service}}/accounts",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags"
+								"accounts"
 							]
 						}
 					},
