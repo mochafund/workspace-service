@@ -45,21 +45,12 @@ public class CategoryService implements ICategoryService {
             validateParent(workspaceId, parentId);
         }
 
-        boolean income = Boolean.TRUE.equals(categoryDto.getIsIncome());
-        boolean excludeFromBudget = Boolean.TRUE.equals(categoryDto.getExcludeFromBudget());
-        boolean excludeFromTotals = Boolean.TRUE.equals(categoryDto.getExcludeFromTotals());
+        Category category = CreateCategoryDto.fromDto(categoryDto);
+        category.setWorkspaceId(workspaceId);
+        category.setCreatedBy(userId);
+        category.setParentId(parentId);
 
-        Category category = categoryRepository.save(Category.builder()
-                .workspaceId(workspaceId)
-                .createdBy(userId)
-                .parentId(parentId)
-                .name(categoryDto.getName())
-                .description(categoryDto.getDescription())
-                .isIncome(income)
-                .excludeFromBudget(excludeFromBudget)
-                .excludeFromTotals(excludeFromTotals)
-                .status(CategoryStatus.ACTIVE)
-                .build());
+        category = categoryRepository.save(category);
 
         log.info("Created categoryId={} for name={}", category.getId(), categoryDto.getName());
         return category;

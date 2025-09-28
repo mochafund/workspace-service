@@ -25,7 +25,6 @@ public class CreateTagDto {
         return Tag.builder()
                 .name(tagDto.getName())
                 .description(tagDto.getDescription())
-                .status(TagStatus.ACTIVE)
                 .build();
     }
 }

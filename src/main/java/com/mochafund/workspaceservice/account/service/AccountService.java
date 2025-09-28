@@ -3,7 +3,6 @@ package com.mochafund.workspaceservice.account.service;
 import com.mochafund.workspaceservice.account.dto.CreateAccountDto;
 import com.mochafund.workspaceservice.account.dto.UpdateAccountDto;
 import com.mochafund.workspaceservice.account.entity.Account;
-import com.mochafund.workspaceservice.account.enums.AccountStatus;
 import com.mochafund.workspaceservice.account.repository.IAccountRepository;
 import com.mochafund.workspaceservice.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -34,18 +33,11 @@ public class AccountService implements IAccountService {
 
     @Transactional
     public Account createAccount(UUID userId, UUID workspaceId, CreateAccountDto accountDto) {
-        Account account = accountRepository.save(Account.builder()
-                .workspaceId(workspaceId)
-                .createdBy(userId)
-                .balance(accountDto.getBalance())
-                .name(accountDto.getName())
-                .displayName(accountDto.getDisplayName())
-                .currency(accountDto.getCurrency())
-                .institutionName(accountDto.getInstitutionName())
-                .source(accountDto.getSource())
-                .type(accountDto.getType())
-                .subType(accountDto.getSubType())
-                .build());
+        Account account = CreateAccountDto.fromDto(accountDto);
+        account.setWorkspaceId(workspaceId);
+        account.setCreatedBy(userId);
+
+        account = accountRepository.save(account);
 
         log.info("Created accountId={} for name={}", account.getId(), accountDto.getName());
         return account;

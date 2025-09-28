@@ -1,5 +1,7 @@
 package com.mochafund.workspaceservice.category.dto;
 
+import com.mochafund.workspaceservice.category.entity.Category;
+import com.mochafund.workspaceservice.category.enums.CategoryStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -24,4 +26,15 @@ public class CreateCategoryDto {
     private Boolean excludeFromBudget;
     private Boolean excludeFromTotals;
     private UUID parentId;
+
+    public static Category fromDto(CreateCategoryDto categoryDto) {
+        return Category.builder()
+                .name(categoryDto.getName())
+                .description(categoryDto.getDescription())
+                .isIncome(Boolean.TRUE.equals(categoryDto.getIsIncome()))
+                .excludeFromBudget(Boolean.TRUE.equals(categoryDto.getExcludeFromBudget()))
+                .excludeFromTotals(Boolean.TRUE.equals(categoryDto.getExcludeFromTotals()))
+                .status(CategoryStatus.ACTIVE)
+                .build();
+    }
 }

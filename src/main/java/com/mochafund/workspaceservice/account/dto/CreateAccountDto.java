@@ -1,5 +1,6 @@
 package com.mochafund.workspaceservice.account.dto;
 
+import com.mochafund.workspaceservice.account.entity.Account;
 import com.mochafund.workspaceservice.account.enums.AccountSource;
 import com.mochafund.workspaceservice.account.enums.AccountStatus;
 import com.mochafund.workspaceservice.account.enums.AccountSubType;
@@ -45,4 +46,17 @@ public class CreateAccountDto implements AccountTypeSubTypeCarrier {
 
     @NotNull(message = "Account sub-type must be provided")
     private AccountSubType subType;
+
+    public static Account fromDto(CreateAccountDto accountDto) {
+        return Account.builder()
+                .balance(accountDto.getBalance())
+                .name(accountDto.getName())
+                .displayName(accountDto.getDisplayName() != null ? accountDto.getDisplayName() : accountDto.getName())
+                .currency(accountDto.getCurrency())
+                .institutionName(accountDto.getInstitutionName())
+                .source(accountDto.getSource())
+                .type(accountDto.getType())
+                .subType(accountDto.getSubType())
+                .build();
+    }
 }

@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,19 +50,23 @@ public class Category extends BaseEntity implements Patchable {
     private String description;
 
     @PatchableField
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private CategoryStatus status = CategoryStatus.ACTIVE;
 
     @PatchableField
+    @Builder.Default
     @Column(name = "is_income", nullable = false)
     private boolean isIncome = false;
 
     @PatchableField
+    @Builder.Default
     @Column(name = "exclude_from_budget", nullable = false)
     private boolean excludeFromBudget = false;
 
     @PatchableField
+    @Builder.Default
     @Column(name = "exclude_from_totals", nullable = false)
     private boolean excludeFromTotals = false;
 

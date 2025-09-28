@@ -4,7 +4,6 @@ import com.mochafund.workspaceservice.common.exception.ResourceNotFoundException
 import com.mochafund.workspaceservice.tag.dto.CreateTagDto;
 import com.mochafund.workspaceservice.tag.dto.UpdateTagDto;
 import com.mochafund.workspaceservice.tag.entity.Tag;
-import com.mochafund.workspaceservice.tag.enums.TagStatus;
 import com.mochafund.workspaceservice.tag.repository.ITagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
