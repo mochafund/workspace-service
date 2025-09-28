@@ -160,6 +160,163 @@
 			"id": "20556562-dce8f638-75c7-426d-81ef-d556381751f8"
 		},
 		{
+			"name": "tags Copy",
+			"item": [
+				{
+					"name": "/tags",
+					"id": "20556562-5ae9ac70-bcd6-4837-80d8-0b9d3ac4af40",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/tags",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags",
+					"id": "20556562-2b81bf55-e848-47c2-9716-14b140c304b4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"deez-nutz\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-dc3a5c57-7a89-468a-bd16-58d7179010da",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"poop\"\n}"
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "4ab9249e-c18b-4858-ab0a-9bbdcfdaaac4",
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-7f8e0e0a-33cb-42f2-852e-80e7b3706ca4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "6e2e31af-102d-4e9c-885e-125e187445e9",
+									"key": "id",
+									"value": "7c543bd1-998f-4849-a6f1-478c323f4117"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-a063a7fe-0a3b-47b4-a303-fce1db6395a3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"poop-deez-nuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "63d3dbf1-79f8-48dd-b74b-b75389dd3376",
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "20556562-57153322-abfe-4291-aa53-69fc5d288b56"
+		},
+		{
 			"name": "categories",
 			"item": [
 				{
