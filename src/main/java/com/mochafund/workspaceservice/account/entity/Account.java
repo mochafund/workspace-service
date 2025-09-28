@@ -49,7 +49,7 @@ public class Account extends BaseEntity implements Patchable {
 
     @PatchableField
     @Column(name = "currency", nullable = false)
-    private CurrencyCode currency;
+    private CurrencyCode currency = CurrencyCode.USD;
 
     @PatchableField
     @Column(name = "display_name")
@@ -66,7 +66,7 @@ public class Account extends BaseEntity implements Patchable {
     @PatchableField
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private AccountStatus status;
+    private AccountStatus status = AccountStatus.ACTIVE;
 
     @PatchableField
     @Enumerated(EnumType.STRING)
