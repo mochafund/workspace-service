@@ -39,11 +39,11 @@ public class AccountService implements IAccountService {
                 .createdBy(userId)
                 .balance(accountDto.getBalance())
                 .name(accountDto.getName())
-                .currency(accountDto.getCurrency())
                 .displayName(accountDto.getDisplayName())
+                .currency(accountDto.getCurrency())
                 .institutionName(accountDto.getInstitutionName())
-                .source(accountDto.getSource())
                 .status(accountDto.getStatus())
+                .source(accountDto.getSource())
                 .type(accountDto.getType())
                 .subType(accountDto.getSubType())
                 .build());

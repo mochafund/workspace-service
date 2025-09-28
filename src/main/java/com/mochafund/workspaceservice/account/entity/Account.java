@@ -48,12 +48,12 @@ public class Account extends BaseEntity implements Patchable {
     private String name;
 
     @PatchableField
-    @Column(name = "currency", nullable = false)
-    private CurrencyCode currency = CurrencyCode.USD;
-
-    @PatchableField
     @Column(name = "display_name")
     private String displayName;
+
+    @PatchableField
+    @Column(name = "currency", nullable = false)
+    private CurrencyCode currency = CurrencyCode.USD;
 
     @PatchableField
     @Column(name = "institution_name")
