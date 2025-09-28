@@ -163,7 +163,7 @@
 			"name": "accounts",
 			"item": [
 				{
-					"name": "/tags",
+					"name": "/accounts",
 					"id": "20556562-5ae9ac70-bcd6-4837-80d8-0b9d3ac4af40",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -172,19 +172,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{workspace-service}}/tags",
+							"raw": "{{workspace-service}}/accounts",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags"
+								"accounts"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "/tags",
+					"name": "/accounts",
 					"id": "20556562-2b81bf55-e848-47c2-9716-14b140c304b4",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
