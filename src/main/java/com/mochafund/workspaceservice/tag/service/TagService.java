@@ -34,12 +34,11 @@ public class TagService implements ITagService {
 
     @Transactional
     public Tag createTag(UUID userId, UUID workspaceId, CreateTagDto tagDto) {
-        Tag tag = tagRepository.save(Tag.builder()
-                .workspaceId(workspaceId)
-                .createdBy(userId)
-                .name(tagDto.getName())
-                .status(TagStatus.ACTIVE)
-                .build());
+        Tag tag = CreateTagDto.fromDto(tagDto);
+        tag.setWorkspaceId(workspaceId);
+        tag.setCreatedBy(userId);
+
+        tag = tagRepository.save(tag);
 
         log.info("Created tagId={} for name={}", tag.getId(), tagDto.getName());
         return tag;

@@ -1,5 +1,7 @@
 package com.mochafund.workspaceservice.tag.dto;
 
+import com.mochafund.workspaceservice.tag.entity.Tag;
+import com.mochafund.workspaceservice.tag.enums.TagStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -18,4 +20,12 @@ public class CreateTagDto {
     private String name;
 
     private String description;
+
+    public static Tag fromDto(CreateTagDto tagDto) {
+        return Tag.builder()
+                .name(tagDto.getName())
+                .description(tagDto.getDescription())
+                .status(TagStatus.ACTIVE)
+                .build();
+    }
 }
