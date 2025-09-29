@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Getter
+// TODO: Replace this base class with a generic event envelope once services switch to type-based routing.
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
