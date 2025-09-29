@@ -37,14 +37,12 @@ public class WorkspaceService implements IWorkspaceService {
                 .build()
         );
 
-        WorkspaceEventPayload payload = WorkspaceEventPayload.builder()
-                .workspaceId(workspace.getId())
-                .name(workspace.getName())
-                .build();
-
         kafkaProducer.send(EventEnvelope.<WorkspaceEventPayload>builder()
                 .type(EventType.WORKSPACE_CREATED)
-                .payload(payload)
+                .payload(WorkspaceEventPayload.builder()
+                        .workspaceId(workspace.getId())
+                        .name(workspace.getName())
+                        .build())
                 .build());
 
         return workspace;
@@ -58,14 +56,12 @@ public class WorkspaceService implements IWorkspaceService {
         workspace.patchFrom(workspaceDto);
         Workspace updatedWorkspace = workspaceRepository.save(workspace);
 
-        WorkspaceEventPayload updatedPayload = WorkspaceEventPayload.builder()
-                .workspaceId(updatedWorkspace.getId())
-                .name(updatedWorkspace.getName())
-                .build();
-
         kafkaProducer.send(EventEnvelope.<WorkspaceEventPayload>builder()
                 .type(EventType.WORKSPACE_UPDATED)
-                .payload(updatedPayload)
+                .payload(WorkspaceEventPayload.builder()
+                        .workspaceId(updatedWorkspace.getId())
+                        .name(updatedWorkspace.getName())
+                        .build())
                 .build());
 
         return updatedWorkspace;
@@ -78,14 +74,12 @@ public class WorkspaceService implements IWorkspaceService {
 
         workspaceRepository.deleteById(workspace.getId());
 
-        WorkspaceEventPayload deletedPayload = WorkspaceEventPayload.builder()
-                .workspaceId(workspace.getId())
-                .name(workspace.getName())
-                .build();
-
         kafkaProducer.send(EventEnvelope.<WorkspaceEventPayload>builder()
                 .type(EventType.WORKSPACE_DELETED)
-                .payload(deletedPayload)
+                .payload(WorkspaceEventPayload.builder()
+                        .workspaceId(workspace.getId())
+                        .name(workspace.getName())
+                        .build())
                 .build());
     }
 }

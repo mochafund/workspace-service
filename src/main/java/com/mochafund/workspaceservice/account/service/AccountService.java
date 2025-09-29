@@ -3,8 +3,12 @@ package com.mochafund.workspaceservice.account.service;
 import com.mochafund.workspaceservice.account.dto.CreateAccountDto;
 import com.mochafund.workspaceservice.account.dto.UpdateAccountDto;
 import com.mochafund.workspaceservice.account.entity.Account;
+import com.mochafund.workspaceservice.account.events.AccountEventPayload;
 import com.mochafund.workspaceservice.account.repository.IAccountRepository;
+import com.mochafund.workspaceservice.common.events.EventEnvelope;
+import com.mochafund.workspaceservice.common.events.EventType;
 import com.mochafund.workspaceservice.common.exception.ResourceNotFoundException;
+import com.mochafund.workspaceservice.kafka.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,7 @@ import java.util.UUID;
 public class AccountService implements IAccountService {
 
     private final IAccountRepository accountRepository;
+    private final KafkaProducer kafkaProducer;
 
     @Transactional(readOnly = true)
     public List<Account> listAllByWorkspaceId(UUID workspaceId) {
@@ -39,6 +44,16 @@ public class AccountService implements IAccountService {
 
         account = accountRepository.save(account);
 
+        kafkaProducer.send(EventEnvelope.<AccountEventPayload>builder()
+                .type(EventType.ACCOUNT_CREATED)
+                .payload(AccountEventPayload.builder()
+                        .id(account.getId())
+                        .workspaceId(workspaceId)
+                        .name(account.getName())
+                        .build())
+                .build()
+        );
+
         log.info("Created accountId={} for name={}", account.getId(), accountDto.getName());
         return account;
     }
@@ -49,8 +64,19 @@ public class AccountService implements IAccountService {
 
         Account account = this.getAccount(workspaceId, accountId);
         account.patchFrom(accountDto);
+        account = accountRepository.save(account);
 
-        return accountRepository.save(account);
+        kafkaProducer.send(EventEnvelope.<AccountEventPayload>builder()
+                .type(EventType.ACCOUNT_UPDATED)
+                .payload(AccountEventPayload.builder()
+                        .id(account.getId())
+                        .workspaceId(workspaceId)
+                        .name(account.getName())
+                        .build())
+                .build()
+        );
+
+        return account;
     }
 
     @Transactional
@@ -60,5 +86,15 @@ public class AccountService implements IAccountService {
         log.info("Deleting accountId={}", account.getId());
 
         accountRepository.deleteByWorkspaceIdAndId(account.getWorkspaceId(), account.getId());
+
+        kafkaProducer.send(EventEnvelope.<AccountEventPayload>builder()
+                .type(EventType.ACCOUNT_DELETED)
+                .payload(AccountEventPayload.builder()
+                        .id(account.getId())
+                        .workspaceId(workspaceId)
+                        .name(account.getName())
+                        .build())
+                .build()
+        );
     }
 }

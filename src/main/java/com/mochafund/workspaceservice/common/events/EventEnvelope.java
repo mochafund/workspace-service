@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.UtilityClass;
 
 import java.time.Instant;
 import java.time.LocalDateTime;

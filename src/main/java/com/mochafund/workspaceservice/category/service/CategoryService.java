@@ -3,10 +3,13 @@ package com.mochafund.workspaceservice.category.service;
 import com.mochafund.workspaceservice.category.dto.CreateCategoryDto;
 import com.mochafund.workspaceservice.category.dto.UpdateCategoryDto;
 import com.mochafund.workspaceservice.category.entity.Category;
-import com.mochafund.workspaceservice.category.enums.CategoryStatus;
+import com.mochafund.workspaceservice.category.events.CategoryEventPayload;
 import com.mochafund.workspaceservice.category.repository.ICategoryRepository;
+import com.mochafund.workspaceservice.common.events.EventEnvelope;
+import com.mochafund.workspaceservice.common.events.EventType;
 import com.mochafund.workspaceservice.common.exception.BadRequestException;
 import com.mochafund.workspaceservice.common.exception.ResourceNotFoundException;
+import com.mochafund.workspaceservice.kafka.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class CategoryService implements ICategoryService {
 
     private final ICategoryRepository categoryRepository;
+    private final KafkaProducer kafkaProducer;
 
     @Transactional(readOnly = true)
     public List<Category> listAllByWorkspaceId(UUID workspaceId) {
@@ -52,6 +56,17 @@ public class CategoryService implements ICategoryService {
 
         category = categoryRepository.save(category);
 
+        kafkaProducer.send(EventEnvelope.<CategoryEventPayload>builder()
+                .type(EventType.CATEGORY_CREATED)
+                .payload(CategoryEventPayload.builder()
+                        .id(category.getId())
+                        .workspaceId(workspaceId)
+                        .name(category.getName())
+                        .parentId(category.getParentId())
+                        .build())
+                .build()
+        );
+
         log.info("Created categoryId={} for name={}", category.getId(), categoryDto.getName());
         return category;
     }
@@ -75,7 +90,20 @@ public class CategoryService implements ICategoryService {
             category.setParentId(parentId);
         }
 
-        return categoryRepository.save(category);
+        category = categoryRepository.save(category);
+
+        kafkaProducer.send(EventEnvelope.<CategoryEventPayload>builder()
+                .type(EventType.CATEGORY_UPDATED)
+                .payload(CategoryEventPayload.builder()
+                        .id(category.getId())
+                        .workspaceId(workspaceId)
+                        .name(category.getName())
+                        .parentId(category.getParentId())
+                        .build())
+                .build()
+        );
+
+        return category;
     }
 
     @Transactional
@@ -85,6 +113,17 @@ public class CategoryService implements ICategoryService {
         log.info("Deleting categoryId={}", category.getId());
 
         categoryRepository.deleteByWorkspaceIdAndId(category.getWorkspaceId(), category.getId());
+
+        kafkaProducer.send(EventEnvelope.<CategoryEventPayload>builder()
+                .type(EventType.CATEGORY_DELETED)
+                .payload(CategoryEventPayload.builder()
+                        .id(category.getId())
+                        .workspaceId(workspaceId)
+                        .name(category.getName())
+                        .parentId(category.getParentId())
+                        .build())
+                .build()
+        );
     }
 
     private void validateParent(UUID workspaceId, UUID parentId) {

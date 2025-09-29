@@ -55,5 +55,4 @@ public class Tag extends BaseEntity implements Patchable {
     @ManyToOne
     @JoinColumn(name = "workspace_id", insertable = false, updatable = false)
     private Workspace workspace;
-
 }
