@@ -1,10 +1,12 @@
 package com.mochafund.workspaceservice.workspace.service;
 
+import com.mochafund.workspaceservice.common.events.EventEnvelope;
+import com.mochafund.workspaceservice.common.events.EventType;
 import com.mochafund.workspaceservice.common.exception.ResourceNotFoundException;
 import com.mochafund.workspaceservice.kafka.KafkaProducer;
 import com.mochafund.workspaceservice.workspace.dto.UpdateWorkspaceDto;
 import com.mochafund.workspaceservice.workspace.entity.Workspace;
-import com.mochafund.workspaceservice.workspace.events.WorkspaceEvent;
+import com.mochafund.workspaceservice.workspace.events.WorkspaceEventPayload;
 import com.mochafund.workspaceservice.workspace.repository.IWorkspaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,19 +30,21 @@ public class WorkspaceService implements IWorkspaceService {
     }
 
     @Transactional
-    public Workspace createWorkspace(WorkspaceEvent.Data workspaceEvent) {
+    public Workspace createWorkspace(WorkspaceEventPayload workspaceEvent) {
         Workspace workspace = workspaceRepository.save(Workspace.builder()
-                .id(workspaceEvent.workspaceId())
-                .name(workspaceEvent.name())
+                .id(workspaceEvent.getWorkspaceId())
+                .name(workspaceEvent.getName())
                 .build()
         );
 
-        kafkaProducer.send(WorkspaceEvent.builder()
-                .type("workspace.created")
-                .data(WorkspaceEvent.Data.builder()
-                        .workspaceId(workspace.getId())
-                        .name(workspace.getName())
-                        .build())
+        WorkspaceEventPayload payload = WorkspaceEventPayload.builder()
+                .workspaceId(workspace.getId())
+                .name(workspace.getName())
+                .build();
+
+        kafkaProducer.send(EventEnvelope.<WorkspaceEventPayload>builder()
+                .type(EventType.WORKSPACE_CREATED)
+                .payload(payload)
                 .build());
 
         return workspace;
@@ -54,12 +58,14 @@ public class WorkspaceService implements IWorkspaceService {
         workspace.patchFrom(workspaceDto);
         Workspace updatedWorkspace = workspaceRepository.save(workspace);
 
-        kafkaProducer.send(WorkspaceEvent.builder()
-                .type("workspace.updated")
-                .data(WorkspaceEvent.Data.builder()
-                        .workspaceId(updatedWorkspace.getId())
-                        .name(updatedWorkspace.getName())
-                        .build())
+        WorkspaceEventPayload updatedPayload = WorkspaceEventPayload.builder()
+                .workspaceId(updatedWorkspace.getId())
+                .name(updatedWorkspace.getName())
+                .build();
+
+        kafkaProducer.send(EventEnvelope.<WorkspaceEventPayload>builder()
+                .type(EventType.WORKSPACE_UPDATED)
+                .payload(updatedPayload)
                 .build());
 
         return updatedWorkspace;
@@ -72,12 +78,14 @@ public class WorkspaceService implements IWorkspaceService {
 
         workspaceRepository.deleteById(workspace.getId());
 
-        kafkaProducer.send(WorkspaceEvent.builder()
-                .type("workspace.deleted")
-                .data(WorkspaceEvent.Data.builder()
-                        .workspaceId(workspace.getId())
-                        .name(workspace.getName())
-                        .build())
+        WorkspaceEventPayload deletedPayload = WorkspaceEventPayload.builder()
+                .workspaceId(workspace.getId())
+                .name(workspace.getName())
+                .build();
+
+        kafkaProducer.send(EventEnvelope.<WorkspaceEventPayload>builder()
+                .type(EventType.WORKSPACE_DELETED)
+                .payload(deletedPayload)
                 .build());
     }
 }

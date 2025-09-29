@@ -1,8 +1,12 @@
 package com.mochafund.workspaceservice.workspace.consumer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mochafund.workspaceservice.common.events.EventEnvelope;
+import com.mochafund.workspaceservice.common.events.EventType;
 import com.mochafund.workspaceservice.common.util.CorrelationIdUtil;
 import com.mochafund.workspaceservice.workspace.entity.Workspace;
-import com.mochafund.workspaceservice.workspace.events.WorkspaceEvent;
+import com.mochafund.workspaceservice.workspace.events.WorkspaceEventPayload;
 import com.mochafund.workspaceservice.workspace.service.IWorkspaceService;
 import com.mochafund.workspaceservice.workspace.util.WorkspaceDefaultsSeeder;
 import lombok.RequiredArgsConstructor;
@@ -17,36 +21,54 @@ public class WorkspaceEventConsumer {
 
     private final IWorkspaceService workspaceService;
     private final WorkspaceDefaultsSeeder workspaceDefaultsSeeder;
+    private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "workspace.provisioning", groupId = "workspace-service")
-    public void handleWorkspaceProvisioning(WorkspaceEvent event) {
+    @KafkaListener(topics = EventType.WORKSPACE_PROVISIONING, groupId = "workspace-service")
+    public void handleWorkspaceProvisioning(String message) {
+        EventEnvelope<WorkspaceEventPayload> event = readEnvelope(message, WorkspaceEventPayload.class);
         CorrelationIdUtil.executeWithCorrelationId(event, () -> {
-            log.info("Processing workspace.provisioning- Workspace: {}", event.getData().workspaceId());
+            WorkspaceEventPayload payload = event.getPayload();
+            log.info("Processing workspace.provisioning- Workspace: {}", payload.getWorkspaceId());
 
-            Workspace workspace = workspaceService.createWorkspace(event.getData());
+            Workspace workspace = workspaceService.createWorkspace(payload);
             log.info("Successfully created workspace {}", workspace.getId());
         });
     }
 
-    @KafkaListener(topics = "workspace.created", groupId = "workspace-service")
-    public void handleWorkspaceCreated(WorkspaceEvent event) {
+    @KafkaListener(topics = EventType.WORKSPACE_CREATED, groupId = "workspace-service")
+    public void handleWorkspaceCreated(String message) {
+        EventEnvelope<WorkspaceEventPayload> event = readEnvelope(message, WorkspaceEventPayload.class);
         CorrelationIdUtil.executeWithCorrelationId(event, () -> {
-            log.info("Processing workspace.created- Workspace: {}", event.getData().workspaceId());
+            WorkspaceEventPayload payload = event.getPayload();
+            log.info("Processing workspace.created- Workspace: {}", payload.getWorkspaceId());
             try {
-                workspaceDefaultsSeeder.seedDefaults(event.getData().workspaceId());
+                workspaceDefaultsSeeder.seedDefaults(payload.getWorkspaceId());
             } catch (Exception ex) {
-                log.error("Failed to seed defaults for workspace {}", event.getData().workspaceId(), ex);
+                log.error("Failed to seed defaults for workspace {}", payload.getWorkspaceId(), ex);
             }
         });
     }
 
-    @KafkaListener(topics = "workspace.deleted.initialized", groupId = "workspace-service")
-    public void handleWorkspaceDeleted(WorkspaceEvent event) {
+    @KafkaListener(topics = EventType.WORKSPACE_DELETED_INITIALIZED, groupId = "workspace-service")
+    public void handleWorkspaceDeleted(String message) {
+        EventEnvelope<WorkspaceEventPayload> event = readEnvelope(message, WorkspaceEventPayload.class);
         CorrelationIdUtil.executeWithCorrelationId(event, () -> {
-            log.info("Processing workspace.deleted.initialized- Workspace: {}", event.getData().workspaceId());
+            WorkspaceEventPayload payload = event.getPayload();
+            log.info("Processing workspace.deleted.initialized- Workspace: {}", payload.getWorkspaceId());
 
-            workspaceService.deleteWorkspace(event.getData().workspaceId());
-            log.info("Successfully deleted workspace {}", event.getData().workspaceId());
+            workspaceService.deleteWorkspace(payload.getWorkspaceId());
+            log.info("Successfully deleted workspace {}", payload.getWorkspaceId());
         });
+    }
+
+    private <T> EventEnvelope<T> readEnvelope(String message, Class<T> payloadType) {
+        try {
+            return objectMapper.readValue(
+                    message,
+                    objectMapper.getTypeFactory().constructParametricType(EventEnvelope.class, payloadType)
+            );
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Failed to parse event envelope", e);
+        }
     }
 }
