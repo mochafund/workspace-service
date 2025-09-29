@@ -54,17 +54,17 @@ public class WorkspaceService implements IWorkspaceService {
 
         Workspace workspace = this.getWorkspace(workspaceId);
         workspace.patchFrom(workspaceDto);
-        Workspace updatedWorkspace = workspaceRepository.save(workspace);
+        workspace = workspaceRepository.save(workspace);
 
         kafkaProducer.send(EventEnvelope.<WorkspaceEventPayload>builder()
                 .type(EventType.WORKSPACE_UPDATED)
                 .payload(WorkspaceEventPayload.builder()
-                        .workspaceId(updatedWorkspace.getId())
-                        .name(updatedWorkspace.getName())
+                        .workspaceId(workspace.getId())
+                        .name(workspace.getName())
                         .build())
                 .build());
 
-        return updatedWorkspace;
+        return workspace;
     }
 
     @Transactional
