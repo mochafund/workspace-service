@@ -340,28 +340,6 @@
 					"response": []
 				},
 				{
-					"name": "/categories/tree",
-					"id": "20556562-fd30f778-b790-4d09-a3e5-5aa5a3f345a4",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{workspace-service}}/categories/tree",
-							"host": [
-								"{{workspace-service}}"
-							],
-							"path": [
-								"categories",
-								"tree"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "/categories",
 					"id": "20556562-d84fe81c-6e03-43e5-9c72-c94decb8fb1d",
 					"protocolProfileBehavior": {
@@ -386,6 +364,28 @@
 							],
 							"path": [
 								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories/tree",
+					"id": "20556562-fd30f778-b790-4d09-a3e5-5aa5a3f345a4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/categories/tree",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"categories",
+								"tree"
 							]
 						}
 					},
