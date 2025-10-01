@@ -168,12 +168,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{workspace-service}}/tags",
+							"raw": "{{workspace-service}}/merchants",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags"
+								"merchants"
 							]
 						}
 					},
@@ -190,7 +190,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"mary-tag-1\",\n    \"description\": \"test-description\"\n}",
+							"raw": "{\n    \"payee\": \"Amazon\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -198,12 +198,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{workspace-service}}/tags",
+							"raw": "{{workspace-service}}/merchants",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags"
+								"merchants"
 							]
 						}
 					},
@@ -219,19 +219,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{workspace-service}}/tags/:id",
+							"raw": "{{workspace-service}}/merchants/:id",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags",
+								"merchants",
 								":id"
 							],
 							"variable": [
 								{
-									"id": "8ae791f9-cf9b-4b15-98d4-fa0e9ad7fdb7",
 									"key": "id",
-									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
+									"value": "afe36398-31f7-48b9-af75-e2f119d8137e"
 								}
 							]
 						}
@@ -248,19 +247,18 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{workspace-service}}/tags/:id",
+							"raw": "{{workspace-service}}/merchants/:id",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags",
+								"merchants",
 								":id"
 							],
 							"variable": [
 								{
-									"id": "3cbf044d-6925-43aa-abea-ff0d2287bbc7",
 									"key": "id",
-									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
+									"value": "afe36398-31f7-48b9-af75-e2f119d8137e"
 								}
 							]
 						}
@@ -278,7 +276,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"poop-deez-nuts\"\n}",
+							"raw": "{\n    \"payee\": \"poop-deez-nuts\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -286,19 +284,18 @@
 							}
 						},
 						"url": {
-							"raw": "{{workspace-service}}/tags/:id",
+							"raw": "{{workspace-service}}/merchants/:id",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags",
+								"merchants",
 								":id"
 							],
 							"variable": [
 								{
-									"id": "739f8f19-5b77-4d64-ad16-71f9e4a353fc",
 									"key": "id",
-									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
+									"value": "afe36398-31f7-48b9-af75-e2f119d8137e"
 								}
 							]
 						}
