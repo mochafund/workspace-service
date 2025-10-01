@@ -312,5 +312,14 @@
         "excludeFromTotals": true
       }
     ]
+  },
+  {
+    "name": "Uncategorized",
+    "description": "Uncategorized transactions",
+    "income": false,
+    "excludeFromBudget": true,
+    "excludeFromTotals": true,
+    "parentId": null,
+    "children": []
   }
 ]
