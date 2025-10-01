@@ -21,4 +21,8 @@ public class EventType {
     public static final String CATEGORY_CREATED = "category.created";
     public static final String CATEGORY_UPDATED = "category.updated";
     public static final String CATEGORY_DELETED = "category.deleted";
+
+    public static final String MERCHANT_CREATED = "merchant.created";
+    public static final String MERCHANT_UPDATED = "merchant.updated";
+    public static final String MERCHANT_DELETED = "merchant.deleted";
 }

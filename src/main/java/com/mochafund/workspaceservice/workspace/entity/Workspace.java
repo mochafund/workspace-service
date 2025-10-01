@@ -1,9 +1,11 @@
 package com.mochafund.workspaceservice.workspace.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mochafund.workspaceservice.account.entity.Account;
 import com.mochafund.workspaceservice.category.entity.Category;
 import com.mochafund.workspaceservice.common.annotations.PatchableField;
 import com.mochafund.workspaceservice.common.patchable.Patchable;
+import com.mochafund.workspaceservice.merchant.entity.Merchant;
 import com.mochafund.workspaceservice.tag.entity.Tag;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -59,4 +61,11 @@ public class Workspace implements Patchable {
     @OneToMany(mappedBy = "workspace", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "workspace", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Account> accounts;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "workspace", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Merchant> merchants;
 }

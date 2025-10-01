@@ -1,5 +1,6 @@
 package com.mochafund.workspaceservice.account.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mochafund.workspaceservice.account.enums.AccountSource;
 import com.mochafund.workspaceservice.account.enums.AccountStatus;
 import com.mochafund.workspaceservice.account.enums.AccountSubType;
@@ -8,10 +9,13 @@ import com.mochafund.workspaceservice.account.enums.AccountType;
 import com.mochafund.workspaceservice.common.annotations.PatchableField;
 import com.mochafund.workspaceservice.common.entity.BaseEntity;
 import com.mochafund.workspaceservice.common.patchable.Patchable;
+import com.mochafund.workspaceservice.workspace.entity.Workspace;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -83,6 +87,11 @@ public class Account extends BaseEntity implements Patchable {
     @Enumerated(EnumType.STRING)
     @Column(name = "sub_type", nullable = false)
     private AccountSubType subType;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "workspace_id", insertable = false, updatable = false)
+    private Workspace workspace;
 
     @PrePersist
     @PreUpdate

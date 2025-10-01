@@ -1,0 +1,10 @@
+-- Create merchants table
+CREATE TABLE merchants (
+      id UUID PRIMARY KEY,
+      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      workspace_id UUID NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
+      created_by UUID NOT NULL,
+      payee VARCHAR(255) NOT NULL,
+      status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'ARCHIVED'))
+);
