@@ -268,7 +268,7 @@
 					"response": []
 				},
 				{
-					"name": "/tags/:id",
+					"name": "/merchants/:id",
 					"id": "20556562-cd845fc7-5805-4aa3-a543-f0cb3a00e6b5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
