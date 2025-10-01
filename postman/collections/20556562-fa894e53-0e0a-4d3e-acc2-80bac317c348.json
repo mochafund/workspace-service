@@ -210,7 +210,7 @@
 					"response": []
 				},
 				{
-					"name": "/tags/:id",
+					"name": "/merchants/:id",
 					"id": "20556562-02f3df62-a0a6-4f9a-b1f6-a5ce65bf1625",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
