@@ -68,10 +68,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"poop\"\n}"
-						},
 						"url": {
 							"raw": "{{workspace-service}}/tags/:id",
 							"host": [
@@ -84,7 +80,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
 								}
 							]
 						}
@@ -112,7 +108,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "7c543bd1-998f-4849-a6f1-478c323f4117"
+									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
 								}
 							]
 						}
@@ -149,7 +145,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": ""
+									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
 								}
 							]
 						}
@@ -227,19 +223,18 @@
 							"raw": "{\n    \"name\": \"poop\"\n}"
 						},
 						"url": {
-							"raw": "{{workspace-service}}/tags/:id",
+							"raw": "{{workspace-service}}/accounts/:id",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags",
+								"accounts",
 								":id"
 							],
 							"variable": [
 								{
-									"id": "4ab9249e-c18b-4858-ab0a-9bbdcfdaaac4",
 									"key": "id",
-									"value": ""
+									"value": "95c2b75f-4620-4503-a7ab-364c73b250f8"
 								}
 							]
 						}
@@ -256,19 +251,18 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{workspace-service}}/tags/:id",
+							"raw": "{{workspace-service}}/accounts/:id",
 							"host": [
 								"{{workspace-service}}"
 							],
 							"path": [
-								"tags",
+								"accounts",
 								":id"
 							],
 							"variable": [
 								{
-									"id": "6e2e31af-102d-4e9c-885e-125e187445e9",
 									"key": "id",
-									"value": "7c543bd1-998f-4849-a6f1-478c323f4117"
+									"value": "0b7cc416-de48-4ca3-9a4e-4276122b2962"
 								}
 							]
 						}
@@ -286,7 +280,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"poop-deez-nuts-account\",\n    \"displayName\": \"wowza\"\n}",
+							"raw": "{\n    \"name\": \"NFCU Checking\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -305,7 +299,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "b8eccb39-37b6-43ff-8f7c-8ff69111aaac"
+									"value": "95c2b75f-4620-4503-a7ab-364c73b250f8"
 								}
 							]
 						}
@@ -350,7 +344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"category-0\"\n}",
+							"raw": "{\n    \"name\": \"new-category-test-0\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -412,7 +406,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "4ae65850-0da8-4d63-b608-18bb059d2992"
+									"value": "f771e616-04f6-4193-84b4-18c29cbfde46"
 								}
 							]
 						}
@@ -440,7 +434,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "4ae65850-0da8-4d63-b608-18bb059d2992"
+									"value": "964c7074-fc0b-400e-b980-256e5b784be2"
 								}
 							]
 						}
@@ -458,7 +452,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"new-name\",\n    \"groupId\": \"8d6cfe79-7723-4a83-8c9c-5bb97013a9be\"\n}",
+							"raw": "{\n    \"parentId\": \"ab0f3499-9c03-4c2b-b868-1076dc09d952\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -477,7 +471,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "2159c97b-3e56-4839-a642-b07750419c3c"
+									"value": "cedf79db-3377-4907-9dfe-2607c62dcd26"
 								}
 							]
 						}
