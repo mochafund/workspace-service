@@ -156,10 +156,10 @@
 			"id": "20556562-dce8f638-75c7-426d-81ef-d556381751f8"
 		},
 		{
-			"name": "tags Copy",
+			"name": "merchants",
 			"item": [
 				{
-					"name": "/tags",
+					"name": "/merchants",
 					"id": "20556562-28133398-e859-4427-a2dc-7102af4b57ed",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -180,7 +180,7 @@
 					"response": []
 				},
 				{
-					"name": "/tags",
+					"name": "/merchants",
 					"id": "20556562-c302e541-812c-4f64-a1b3-e8db7cbbc279",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
