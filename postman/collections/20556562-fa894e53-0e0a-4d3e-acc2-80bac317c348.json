@@ -156,6 +156,159 @@
 			"id": "20556562-dce8f638-75c7-426d-81ef-d556381751f8"
 		},
 		{
+			"name": "tags Copy",
+			"item": [
+				{
+					"name": "/tags",
+					"id": "20556562-28133398-e859-4427-a2dc-7102af4b57ed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/tags",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags",
+					"id": "20556562-c302e541-812c-4f64-a1b3-e8db7cbbc279",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"mary-tag-1\",\n    \"description\": \"test-description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-02f3df62-a0a6-4f9a-b1f6-a5ce65bf1625",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "8ae791f9-cf9b-4b15-98d4-fa0e9ad7fdb7",
+									"key": "id",
+									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-42f28914-f9e7-428e-99c6-40e8fd574128",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "3cbf044d-6925-43aa-abea-ff0d2287bbc7",
+									"key": "id",
+									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tags/:id",
+					"id": "20556562-cd845fc7-5805-4aa3-a543-f0cb3a00e6b5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"poop-deez-nuts\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{workspace-service}}/tags/:id",
+							"host": [
+								"{{workspace-service}}"
+							],
+							"path": [
+								"tags",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "739f8f19-5b77-4d64-ad16-71f9e4a353fc",
+									"key": "id",
+									"value": "486d4b20-e107-4b3d-852b-ba524fdea788"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "20556562-c425fc2d-9600-4102-a0c2-44e353c8c3b1"
+		},
+		{
 			"name": "accounts",
 			"item": [
 				{
